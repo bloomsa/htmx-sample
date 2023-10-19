@@ -6,6 +6,7 @@
     <!-- Minimal clean style from pico css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     <style>
       /* Pico css keeps bullets in lists, we hide them */
       li {
@@ -23,17 +24,17 @@
     <div class="container">
 
       <br> <!-- Lazy spacing from top of the screen  -->
-
+      <!-- sprinkle hx-boost="true" on anything you want to be ✨dynamic✨ -->
         <h1>Todo ({{counts['done']}}/{{counts['total']}})</h1>
 
 
         <!-- The form to add a new task. button-primary is pico css styling -->
-        <form method="post" action="/add" >
+        <form method="post" action="/add" hx-boost="true">
           <input type="text" name="title" placeholder="New task" value="" autocomplete="off">
           <button type="submit" value="Add" class="button-primary" role="button">Add</button>
         </form>
 
-        <form method="post" action="/set_task_status">
+        <form method="post" action="/set_task_status" hx-boost="true">
             <ul>
               % for task in tasks:
               <li>
@@ -45,7 +46,7 @@
                   % end
                 >
                 <label for="task{{task['id']}}">{{task['title']}}</label>
-                <a href="/delete/{{task['id']}}"> X </a>
+                <a href="/delete/{{task['id']}}" hx-boost="true"> X </a>
               </li>
               % end
             </ul>
