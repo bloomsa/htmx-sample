@@ -24,55 +24,32 @@
 
       <br> <!-- Lazy spacing from top of the screen  -->
 
-        <!-- The title. We hardcode the number of tasks and the tasks themselves here,
-        but we will change that will templating later -->
-
-        <h1>Todo <span>(3/4)</span></h1>
+        <h1>Todo ({{counts['done']}}/{{counts['total']}})</h1>
 
 
         <!-- The form to add a new task. button-primary is pico css styling -->
-        <form method="post"  >
+        <form method="post" action="/add" >
           <input type="text" name="title" placeholder="New task" value="" autocomplete="off">
           <button type="submit" value="Add" class="button-primary" role="button">Add</button>
         </form>
 
-
-        <!-- The list of tasks, again hardcoded for the moment. It's in a form
-        with a button to update the status (done/not done) manually, like grandma
-        used to do. -->
-        <form method="post">
+        <form method="post" action="/set_task_status">
             <ul>
-
-                <li>
-                    <input type="checkbox" id="task432432"
-                           name="task"
-                           value="432432"
-                    >
-                    <label for="task432432">Call the secret services</label>
-                    <a>X</a>
-                </li>
-
-                <li>
-                    <input type="checkbox" id="task1"
-                          name="task"
-                          value="1"
-                          checked
-                    >
-                    <label for="task1">Save orphans</label>
-                    <a>X</a>
-                </li>
-
+              % for task in tasks:
               <li>
-                  <input type="checkbox" id="task43"
-                        name="task"
-                        value="43"
-                  >
-                  <label for="task43">Leg day</label>
-                  <a>X</a>
+                <input type="checkbox" id="task{{task['id']}}"
+                  name="task"
+                  value="{{task['id']}}"
+                  % if task['done']:
+                  checked
+                  % end
+                >
+                <label for="task{{task['id']}}">{{task['title']}}</label>
+                <a href="/delete/{{task['id']}}"> X </a>
               </li>
-
+              % end
             </ul>
-
+            % if tasks:
             <button type="submit" class="button-primary">Update</button>
 
         </form>

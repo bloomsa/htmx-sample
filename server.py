@@ -16,7 +16,7 @@ TEMPLATE_PATH.append(str(CUR_DIR))
 def index():
     """List all the tasks, count them, then render the index page template"""
 
-    tasks = todo.list_tides()
+    tasks = todo.list_todos()
     counts = todo.count_todos()
     return template("index", tasks=tasks, counts=counts)
 
